@@ -28,6 +28,7 @@
         app.mountChooseGameButtons(
           games.map(({ type, color }) => ({ type, color }))
         );
+        app.updatePage(games[0]);
       },
 
       mountChooseGameButtons(games) {
@@ -72,6 +73,33 @@
         });
 
         $choose.get().appendChild(fragment);
+      },
+
+      updatePage(game) {
+        const $type = $('[data-js="currentType"]').get();
+        const $description = $('[data-js="currentDescription"]').get();
+
+        $type.innerText = game.type;
+        $description.innerText = game.description;
+
+        this.mountNumbers(game.range);
+      },
+
+      mountNumbers(quantity) {
+        const $numbers = $('.numbers').get();
+
+        const fragment = doc.createDocumentFragment();
+
+        for (let i = 1; i <= quantity; i += 1) {
+          const button = doc.createElement('button');
+          button.setAttribute('type', 'button');
+          button.setAttribute('class', 'number');
+          button.innerText = `0${i}`.slice(-2);
+
+          fragment.appendChild(button);
+        }
+
+        $numbers.appendChild(fragment);
       },
 
       addStyle(style) {

@@ -108,6 +108,7 @@ section:first-child > .chooseGame > button {
 
 section:first-child > .numbers {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.6rem;
 }
 
