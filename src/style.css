@@ -106,36 +106,6 @@ section:first-child > .chooseGame > button {
   font-weight: bolder;
 }
 
-section:first-child > .chooseGame > button.lotofacil {
-  color: #7F3992;
-  border-color: #7F3992;
-}
-
-section:first-child > .chooseGame > button.lotofacil.active {
-  color: #ffffff;
-  background-color: #7F3992;
-}
-
-section:first-child > .chooseGame > button.megasena {
-  color: #01AC66;
-  border-color: #01AC66;
-}
-
-section:first-child > .chooseGame > button.megasena.active {
-  color: #ffffff;
-  background-color: #01AC66;
-}
-
-section:first-child > .chooseGame > button.lotomania {
-  color: #F79C31;
-  border-color: #F79C31;
-}
-
-section:first-child > .chooseGame > button.lotomania.active {
-  color: #ffffff;
-  background-color: #F79C31;
-}
-
 section:first-child > .numbers {
   display: flex;
   gap: 0.6rem;

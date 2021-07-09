@@ -1,32 +1,86 @@
 /* eslint-disable no-console */
 (function ninja(doc, win, $) {
-  let games;
+  const app = (function controller() {
+    return {
+      init() {
+        this.loadGames();
+      },
 
-  const app = () => ({
-    init() {
-      this.loadGames();
-    },
+      loadGames() {
+        const ajax = new XMLHttpRequest();
+        ajax.open('GET', `./games.json`);
+        ajax.send();
 
-    loadGames() {
-      const ajax = new XMLHttpRequest();
-      ajax.open('GET', `./games.json`);
-      ajax.send();
+        ajax.addEventListener('readystatechange', this.onLoadGames, false);
+      },
 
-      ajax.addEventListener('readystatechange', this.onLoadGames, false);
-    },
-
-    onLoadGames() {
-      if (this.readyState === 4 && this.status === 200) {
-        try {
-          games = JSON.parse(this.responseText);
-        } catch (e) {
-          console.error(
-            `Houve um erro ao carregar o jogos: ${this.responseText}`
-          );
+      onLoadGames() {
+        if (this.readyState === 4 && this.status === 200) {
+          try {
+            app.mountPage(JSON.parse(this.responseText).types);
+          } catch (e) {
+            console.error(`Houve um erro ao carregar o jogos: \n`, e);
+          }
         }
-      }
-    },
-  });
+      },
 
-  app().init();
+      mountPage(games) {
+        app.mountChooseGameButtons(
+          games.map(({ type, color }) => ({ type, color }))
+        );
+      },
+
+      mountChooseGameButtons(games) {
+        const $choose = $('.chooseGame');
+
+        const fragment = doc.createDocumentFragment();
+
+        games.forEach((btn, index) => {
+          const button = doc.createElement('button');
+          button.setAttribute('type', 'button');
+          button.setAttribute('data-cg-btn', index);
+
+          if (index === 0) {
+            button.classList.add('active');
+          }
+
+          button.innerText = btn.type;
+
+          this.addStyle(`
+            section:first-child > .chooseGame > button[data-cg-btn="${index}"] {
+              color: ${btn.color};
+              border-color: ${btn.color};
+            }
+
+            section:first-child > .chooseGame > button[data-cg-btn="${index}"]:hover {
+              color: #ffffff;
+              background-color: ${btn.color}cc;
+            }
+
+            section:first-child > .chooseGame > button[data-cg-btn="${index}"].active {
+              color: #ffffff;
+              background-color: ${btn.color};
+            }
+
+            section:first-child > .chooseGame > button[data-cg-btn="${index}"].active:hover {
+              border-color: ${btn.color}cc;
+              background-color: ${btn.color}cc;
+            }
+          `);
+
+          fragment.appendChild(button);
+        });
+
+        $choose.get().appendChild(fragment);
+      },
+
+      addStyle(style) {
+        const $style = $('[data-js="dynamic-style"]');
+
+        $style.get().innerHTML += style;
+      },
+    };
+  })();
+
+  app.init();
 })(document, window, window.DOM);
