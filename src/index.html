@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>TGL</title>
-  <script src="https://unpkg.com/feather-icons"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -23,48 +22,71 @@
 
     <p><b>Choose a game</b></p>
 
-    <div>
-      <button type="button">Lotofácil</button>
-      <button type="button">Mega-Sena</button>
-      <button type="button">Lotomania</button>
+    <div class="chooseGame">
+      <button type="button" class="lotofacil active">Lotofácil</button>
+      <button type="button" class="megasena">Mega-Sena</button>
+      <button type="button" class="lotomania">Lotomania</button>
     </div>
 
     <p><b>Fill your bet</b></p>
     <p>Escolha 15 números para apostar na lotofácil. Você ganha acertando 11, 12, 13, 14 ou 15 números. São muitas
       chances de ganhar, e agora você joga de onde estiver!</p>
 
-    <button type="button">01</button>
-    <button type="button">02</button>
-    <button type="button">03</button>
-    <button type="button">04</button>
+    <div class="numbers">
+      <button type="button" class="number">01</button>
+      <button type="button" class="number">02</button>
+      <button type="button" class="number">03</button>
+      <button type="button" class="number">04</button>
+    </div>
 
-    <div>
+    <div class="actions">
       <div>
         <button type="button">Complete game</button>
         <button type="button">Clear game</button>
       </div>
 
-      <button type="button">Add to cart <i data-feather="cart"></i></button>
+      <button type="button">Add to cart <i data-feather="shopping-cart"></i></button>
     </div>
 
   </section>
   <section>
-    <h1>CART</h1>
-
     <div>
-      <span><i data-feather="trash"></i></span>
-      <p>1,2,3,4,4,5,6,9,7,8</p>
-      <p><span>lotofácil</span> <span>R$ 2,50</span></p>
+      <h1>CART</h1>
+
+      <div>
+        <span><i data-feather="trash-2"></i></span>
+        <div class="item lotofacil">
+          <p><span>01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25</span></p>
+          <p><span>lotofácil</span> <span>R$ 2,50</span></p>
+        </div>
+      </div>
+
+      <div>
+        <span><i data-feather="trash-2"></i></span>
+        <div class="item megasena">
+          <p>1,2,3,4,4,5,6,9,7,8</p>
+          <p><span>lotofácil</span> <span>R$ 2,50</span></p>
+        </div>
+      </div>
+
+      <div>
+        <span><i data-feather="trash-2"></i></span>
+
+        <div class="item lotomania">
+          <p>1,2,3,4,4,5,6,9,7,8</p>
+          <p><span>lotofácil</span> <span>R$ 2,50</span></p>
+        </div>
+      </div>
+
+      <h1>CART <span>TOTAL: R$ 7,00</span></h1>
     </div>
-
-    <h1>CART <span>TOTAL: R$ 7,00</span></h1>
-
     <button>Save <i data-feather="arrow-right"></i></button>
   </section>
 </main>
 <script src="main.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
 <script>
-  feather.replace()
+  feather.replace();
 </script>
 </body>
 </html>

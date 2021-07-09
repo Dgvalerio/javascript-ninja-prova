@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
+* {
+  margin: 0;
+}
+
+/* lotofacil #7F3992 */
+/* megasena #01AC66 */
+/* lotomania #F79C31 */
+
 body {
   margin: 0;
 
@@ -11,11 +19,12 @@ body {
 }
 
 /* Header */
+
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem 0;
+  padding: 1rem 4rem 0;
   border-bottom: 2px solid #EBEBEB;
 }
 
@@ -62,5 +71,228 @@ header > div:last-child > a:last-child {
 /* Main */
 
 main {
-  padding: 2rem;
+  display: flex;
+  gap: 4rem;
+  padding: 2rem 4rem;
+}
+
+@media (max-width: 1024px) {
+  main {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Seção esquerda */
+
+section:first-child > .chooseGame {
+  display: flex;
+  gap: 1rem;
+}
+
+section:first-child > .chooseGame > button {
+  padding: 0.4rem 1.75rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  font-size: 1rem;
+  border: 2px solid black;
+  font-style: italic;
+  font-weight: bolder;
+}
+
+section:first-child > .chooseGame > button.lotofacil {
+  color: #7F3992;
+  border-color: #7F3992;
+}
+
+section:first-child > .chooseGame > button.lotofacil.active {
+  color: #ffffff;
+  background-color: #7F3992;
+}
+
+section:first-child > .chooseGame > button.megasena {
+  color: #01AC66;
+  border-color: #01AC66;
+}
+
+section:first-child > .chooseGame > button.megasena.active {
+  color: #ffffff;
+  background-color: #01AC66;
+}
+
+section:first-child > .chooseGame > button.lotomania {
+  color: #F79C31;
+  border-color: #F79C31;
+}
+
+section:first-child > .chooseGame > button.lotomania.active {
+  color: #ffffff;
+  background-color: #F79C31;
+}
+
+section:first-child > .numbers {
+  display: flex;
+  gap: 0.6rem;
+}
+
+section:first-child > .numbers > button.number {
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 1.25rem;
+
+  border-radius: 50%;
+  background-color: #ADC0C4;
+  color: white;
+  border: none;
+}
+
+section:first-child > .actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+
+section:first-child > .actions > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 0.4rem;
+}
+
+section:first-child > .actions > div > button {
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid #27C383;
+  color: #27C383;
+  background: white;
+  border-radius: 0.6rem;
+  font-weight: bolder;
+}
+
+section:first-child > .actions > button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid #27C383;
+  color: white;
+  background: #27C383;
+  border-radius: 0.6rem;
+  font-weight: bolder;
+}
+
+/* Seção direita */
+
+section:last-child {
+  min-width: 24rem;
+  background-color: #fff;
+  border-radius: 0.6rem;
+  border: 1px solid #E2E2E2;
+}
+
+section:last-child > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+
+  padding: 2rem 1rem;
+}
+
+section:last-child > div > h1:first-child {
+  margin-bottom: 1rem;
+}
+
+section:last-child > div > h1:last-child {
+  margin-top: 1rem;
+}
+
+section:last-child > div > div {
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
+}
+
+section:last-child > div > div > .item {
+  display: flex;
+  flex-direction: column;
+
+  border-left: 4px solid black;
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  gap: 0.6rem;
+}
+
+section:last-child > div > div > .item > p > span:first-child {
+  font-weight: bolder;
+}
+
+section:last-child > div > div > .item > p:last-child > span:last-child {
+  font-style: normal;
+  margin-left: 0.4rem;
+}
+
+section:last-child > div > div > .item.lotofacil {
+  border-color: #7F3992;
+}
+
+section:last-child > div > div > .item.lotofacil > p:last-child > span:first-child {
+  color: #7F3992;
+}
+
+section:last-child > div > div > .item.megasena {
+  border-color: #01AC66;
+}
+
+section:last-child > div > div > .item.megasena > p:last-child > span:first-child {
+  color: #01AC66;
+}
+
+section:last-child > div > div > .item.lotomania {
+  border-color: #F79C31;
+}
+
+section:last-child > div > div > .item.lotomania > p:last-child > span:first-child {
+  color: #F79C31;
+}
+
+section:last-child > button {
+  font-weight: bold;
+  font-size: 35px;
+  border-radius: 0 0 0.6rem 0.6rem;
+  border: none;
+  border-top: 1px solid #E2E2E2;
+  padding-top: 27px;
+  padding-bottom: 27px;
+  background-color: #F4F4F4;
+  color: #27C383;
+  font-style: italic;
+}
+
+section:last-child h1 > span {
+  font-style: normal;
+}
+
+/* Extras */
+
+h1 {
+  font-weight: bolder;
+}
+
+h1 > span {
+  font-weight: lighter;
+}
+
+button {
+  cursor: pointer;
 }
