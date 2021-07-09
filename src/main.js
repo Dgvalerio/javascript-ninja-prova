@@ -25,9 +25,7 @@
       },
 
       mountPage(games) {
-        app.mountChooseGameButtons(
-          games.map(({ type, color }) => ({ type, color }))
-        );
+        app.mountChooseGameButtons(games);
         app.updatePage(games[0]);
       },
 
@@ -39,7 +37,7 @@
         games.forEach((btn, index) => {
           const button = doc.createElement('button');
           button.setAttribute('type', 'button');
-          button.setAttribute('data-cg-btn', index);
+          button.setAttribute('data-choose-game', btn.type);
 
           if (index === 0) {
             button.classList.add('active');
@@ -48,26 +46,39 @@
           button.innerText = btn.type;
 
           this.addStyle(`
-            section:first-child > .chooseGame > button[data-cg-btn="${index}"] {
+            section:first-child > .chooseGame > button[data-choose-game="${btn.type}"] {
               color: ${btn.color};
               border-color: ${btn.color};
             }
 
-            section:first-child > .chooseGame > button[data-cg-btn="${index}"]:hover {
+            section:first-child > .chooseGame > button[data-choose-game="${btn.type}"]:hover {
               color: #ffffff;
               background-color: ${btn.color}cc;
             }
 
-            section:first-child > .chooseGame > button[data-cg-btn="${index}"].active {
+            section:first-child > .chooseGame > button[data-choose-game="${btn.type}"].active {
               color: #ffffff;
               background-color: ${btn.color};
             }
 
-            section:first-child > .chooseGame > button[data-cg-btn="${index}"].active:hover {
+            section:first-child > .chooseGame > button[data-choose-game="${btn.type}"].active:hover {
               border-color: ${btn.color}cc;
               background-color: ${btn.color}cc;
             }
           `);
+
+          button.addEventListener(
+            'click',
+            () => {
+              if (button.className.split(' ').indexOf('active') === -1) {
+                const $active = $('.chooseGame > button.active');
+                $active.get().classList.remove('active');
+                button.classList.add('active');
+                this.updatePage(btn);
+              }
+            },
+            false
+          );
 
           fragment.appendChild(button);
         });
@@ -99,6 +110,7 @@
           fragment.appendChild(button);
         }
 
+        $numbers.innerHTML = '';
         $numbers.appendChild(fragment);
       },
 

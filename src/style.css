@@ -72,6 +72,7 @@ header > div:last-child > a:last-child {
 
 main {
   display: flex;
+  align-items: start;
   gap: 4rem;
   padding: 2rem 4rem;
 }
