@@ -4,10 +4,6 @@
   margin: 0;
 }
 
-/* lotofacil #7F3992 */
-/* megasena #01AC66 */
-/* lotomania #F79C31 */
-
 body {
   margin: 0;
 
@@ -75,13 +71,6 @@ main {
   align-items: start;
   gap: 4rem;
   padding: 2rem 4rem;
-}
-
-@media (max-width: 1024px) {
-  main {
-    flex-direction: column;
-    gap: 2rem;
-  }
 }
 
 section {
@@ -267,4 +256,20 @@ h1 > span {
 
 button {
   cursor: pointer;
+}
+
+/* Responsividade */
+
+@media (max-width: 1024px) {
+  /* Main */
+  main {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: stretch;
+  }
+
+  /* Seção esquerda */
+  section:first-child > .chooseGame {
+    flex-direction: column;
+  }
 }

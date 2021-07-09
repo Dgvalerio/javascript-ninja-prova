@@ -1,7 +1,7 @@
 {
   "name": "javascript-ninja-prova",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.html",
   "repository": "https://github.com/Dgvalerio/javascript-ninja-prova.git",
   "author": "Davi Gonçalves Valério <al.davigvalerio@gmail.com>",
   "license": "MIT",
