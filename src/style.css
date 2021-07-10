@@ -2,11 +2,10 @@
 
 * {
   margin: 0;
+  outline: none;
 }
 
 body {
-  margin: 0;
-
   background-color: #F7F7F7;
   color: #707070;
 

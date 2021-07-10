@@ -41,6 +41,13 @@
 
           if (index === 0) {
             button.classList.add('active');
+            this.addStyle(
+              `
+                section:first-child > .numbers > button.number.active {
+                  background-color: ${btn.color};
+                }
+              `
+            );
           }
 
           button.innerText = btn.type;
@@ -74,6 +81,16 @@
                 const $active = $('.chooseGame > button.active');
                 $active.get().classList.remove('active');
                 button.classList.add('active');
+
+                this.replaceStyle(
+                  /[\n ]+section:first-child > \.numbers > button\.number\.active {[\n ]+background-color: (.+);[\n ]+}[\n ]+/gm,
+                  `
+                    section:first-child > .numbers > button.number.active {
+                      background-color: ${btn.color};
+                    }
+                  `
+                );
+
                 this.updatePage(btn);
               }
             },
@@ -93,19 +110,34 @@
         $type.innerText = game.type;
         $description.innerText = game.description;
 
-        this.mountNumbers(game.range);
+        this.mountNumbers(game);
       },
 
-      mountNumbers(quantity) {
+      mountNumbers({ range, 'max-number': maxNumber }) {
         const $numbers = $('.numbers').get();
 
         const fragment = doc.createDocumentFragment();
 
-        for (let i = 1; i <= quantity; i += 1) {
+        for (let i = 1; i <= range; i += 1) {
           const button = doc.createElement('button');
           button.setAttribute('type', 'button');
           button.setAttribute('class', 'number');
           button.innerText = `0${i}`.slice(-2);
+
+          button.addEventListener(
+            'click',
+            () => {
+              const { length } = $('.numbers > .number.active').element;
+              if (length >= maxNumber && !button.classList.contains('active')) {
+                win.alert(
+                  `Você não pode escolher mais que ${maxNumber} números!`
+                );
+              } else {
+                button.classList.toggle('active');
+              }
+            },
+            false
+          );
 
           fragment.appendChild(button);
         }
@@ -118,6 +150,12 @@
         const $style = $('[data-js="dynamic-style"]');
 
         $style.get().innerHTML += style;
+      },
+
+      replaceStyle(replace, style) {
+        const $style = $('[data-js="dynamic-style"]');
+
+        $style.get().innerHTML = $style.get().innerHTML.replace(replace, style);
       },
     };
   })();
