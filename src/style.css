@@ -193,6 +193,22 @@ section:last-child > div > .items > div {
   gap: 1rem;
 }
 
+section:last-child > div > .items > div > button {
+  background-color: transparent;
+  color:  #707070;
+  padding: 0.4rem;
+  border-radius: 50%;
+  min-height: 3rem;
+  min-width: 3rem;
+  border: none;
+  transition: 0.4s;
+}
+
+section:last-child > div > .items > div > button:hover {
+  background-color: #30303055;
+  color: #ffffff;
+}
+
 section:last-child > div > .items > div > .item {
   display: flex;
   flex-direction: column;

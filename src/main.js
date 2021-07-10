@@ -65,6 +65,7 @@
 
       addToCart() {
         const { type, 'max-number': maxNumber, price } = currentGame;
+        const items = $('.items').get();
 
         const actives = $('.numbers > .number.active');
 
@@ -72,23 +73,43 @@
           win.alert(`Voce deve escolher ao menos ${maxNumber} números!`);
         } else {
           const blank = $('[data-js="blank"]');
+          let pos = 0;
           if (blank.element.length > 0) {
             blank.get().outerHTML = '';
+          } else {
+            pos = +items.lastElementChild.getAttribute('data-item-pos') + 1;
           }
 
           const fragment = doc.createDocumentFragment();
 
           const cartItem = doc.createElement('div');
+          cartItem.setAttribute('data-game-type', type);
           cartItem.setAttribute('data-item-price', price);
+          cartItem.setAttribute('data-item-pos', pos);
 
-          const span = doc.createElement('span');
+          const span = doc.createElement('button');
           const icon = doc.createElement('i');
           icon.setAttribute('data-feather', 'trash-2');
           span.appendChild(icon);
+          span.addEventListener(
+            'click',
+            () => {
+              cartItem.outerHTML = '';
+
+              if (items.childElementCount === 0) {
+                const blankDiv = doc.createElement('div');
+                blankDiv.setAttribute('data-js', 'blank');
+                const blankP = doc.createElement('p');
+                blankDiv.innerText = 'Seu carrinho está vazio.';
+                blankDiv.appendChild(blankP);
+                items.appendChild(blankDiv);
+              }
+            },
+            false
+          );
 
           const item = doc.createElement('div');
           item.classList.add('item');
-          item.setAttribute('data-game-type', type);
           span.appendChild(icon);
 
           const p1 = doc.createElement('p');
@@ -114,7 +135,7 @@
 
           fragment.appendChild(cartItem);
 
-          $('.items').get().appendChild(fragment);
+          items.appendChild(fragment);
           app.clearGame();
         }
 
@@ -179,11 +200,19 @@
               background-color: ${btn.color}cc;
             }
 
-            section:last-child > div > .items > div > .item[data-game-type="${btn.type}"] {
+            section:last-child > div > .items > div[data-game-type="${btn.type}"] > button:hover {
+              background-color: ${btn.color};
+            }
+
+            section:last-child > div > .items > div[data-game-type="${btn.type}"] > button:active {
+              background-color: ${btn.color}aa;
+            }
+
+            section:last-child > div > .items > div[data-game-type="${btn.type}"] > .item {
               border-color: ${btn.color};
             }
 
-            section:last-child > div > .items > div > .item[data-game-type="${btn.type}"] > p:last-child > span:first-child {
+            section:last-child > div > .items > div[data-game-type="${btn.type}"] > .item > p:last-child > span:first-child {
               color: ${btn.color};
             }
           `);
