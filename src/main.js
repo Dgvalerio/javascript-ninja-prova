@@ -4,6 +4,27 @@
     return {
       init() {
         this.loadGames();
+        this.addSomeEvents();
+      },
+
+      addSomeEvents() {
+        $('[data-js="complete-game"]').on(
+          'click',
+          () => win.alert('complete-game'),
+          false
+        );
+        $('[data-js="clear-game"]').on('click', this.clearGame, false);
+        $('[data-js="add-to-cart"]').on(
+          'click',
+          () => win.alert('add-to-cart'),
+          false
+        );
+      },
+
+      clearGame() {
+        $('.numbers > .number.active').forEach((buttonActive) =>
+          buttonActive.classList.remove('active')
+        );
       },
 
       loadGames() {
