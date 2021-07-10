@@ -1,30 +1,9 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-continue */
 (function ninja(doc, win, $) {
   const app = (function controller() {
     return {
       init() {
         this.loadGames();
-        this.addSomeEvents();
-      },
-
-      addSomeEvents() {
-        $('[data-js="complete-game"]').on(
-          'click',
-          () => win.alert('complete-game'),
-          false
-        );
-        $('[data-js="clear-game"]').on('click', this.clearGame, false);
-        $('[data-js="add-to-cart"]').on(
-          'click',
-          () => win.alert('add-to-cart'),
-          false
-        );
-      },
-
-      clearGame() {
-        $('.numbers > .number.active').forEach((buttonActive) =>
-          buttonActive.classList.remove('active')
-        );
       },
 
       loadGames() {
@@ -48,6 +27,44 @@
       mountPage(games) {
         app.mountChooseGameButtons(games);
         app.updatePage(games[0]);
+        app.addEvents(games[0]);
+      },
+
+      addEvents(game) {
+        $('[data-js="complete-game"]').on(
+          'click',
+          () => this.completeGame(game),
+          false
+        );
+
+        $('[data-js="clear-game"]').on('click', this.clearGame, false);
+        $('[data-js="add-to-cart"]').on(
+          'click',
+          () => win.alert('add-to-cart'),
+          false
+        );
+      },
+
+      completeGame({ 'max-number': maxNumber, range }) {
+        app.clearGame();
+
+        const numbers = [];
+
+        while (numbers.length < maxNumber) {
+          const n = Math.floor(Math.random() * range);
+          if (numbers.indexOf(n) >= 0) continue;
+
+          numbers.push(n);
+        }
+        $('.numbers > .number').forEach((buttonActive, index) => {
+          if (numbers.indexOf(index) >= 0) buttonActive.classList.add('active');
+        });
+      },
+
+      clearGame() {
+        $('.numbers > .number.active').forEach((buttonActive) =>
+          buttonActive.classList.remove('active')
+        );
       },
 
       mountChooseGameButtons(games) {
@@ -131,6 +148,7 @@
         $type.innerText = game.type;
         $description.innerText = game.description;
 
+        this.addEvents(game);
         this.mountNumbers(game);
       },
 
