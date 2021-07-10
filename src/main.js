@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-continue */
+/* eslint-disable no-continue */
 (function ninja(doc, win, $, icons) {
   const app = (function controller() {
     let games = [];
@@ -24,7 +24,7 @@
             app.setCurrentGame(games[0]);
             app.mountPage();
           } catch (e) {
-            console.error(`Houve um erro ao carregar o jogos: \n`, e);
+            win.alert.error(`Houve um erro ao carregar o jogos: \n`, e);
           }
         }
       },
@@ -38,6 +38,41 @@
         $('[data-js="complete-game"]').on('click', this.completeGame, false);
         $('[data-js="clear-game"]').on('click', this.clearGame, false);
         $('[data-js="add-to-cart"]').on('click', this.addToCart, false);
+        $('[data-js="save"]').on('click', this.saveGame, false);
+      },
+
+      saveGame() {
+        const sum = $('[data-item-price]').reduce(
+          (accumulator, current) =>
+            accumulator + +current.getAttribute('data-item-price'),
+          0
+        );
+        const min = games
+          .map((m) => m['min-cart-value'])
+          .reduce((major, current) => Math.max(major, current));
+
+        if (sum < min) {
+          win.alert(
+            `A compra precisa ter um valor mínimo de ${sum.toLocaleString(
+              'pt-br',
+              {
+                style: 'currency',
+                currency: 'BRL',
+              }
+            )}`
+          );
+        } else {
+          const items = $('.items').get();
+          items.innerText = '';
+          app.sumTotalCart();
+
+          const blankDiv = doc.createElement('div');
+          blankDiv.setAttribute('data-js', 'blank');
+          const blankP = doc.createElement('p');
+          blankDiv.innerText = 'Seu carrinho está vazio.';
+          blankDiv.appendChild(blankP);
+          items.appendChild(blankDiv);
+        }
       },
 
       completeGame() {
@@ -87,14 +122,15 @@
           cartItem.setAttribute('data-item-price', price);
           cartItem.setAttribute('data-item-pos', pos);
 
-          const span = doc.createElement('button');
+          const button = doc.createElement('button');
           const icon = doc.createElement('i');
           icon.setAttribute('data-feather', 'trash-2');
-          span.appendChild(icon);
-          span.addEventListener(
+          button.appendChild(icon);
+          button.addEventListener(
             'click',
             () => {
               cartItem.outerHTML = '';
+              app.sumTotalCart();
 
               if (items.childElementCount === 0) {
                 const blankDiv = doc.createElement('div');
@@ -110,7 +146,7 @@
 
           const item = doc.createElement('div');
           item.classList.add('item');
-          span.appendChild(icon);
+          button.appendChild(icon);
 
           const p1 = doc.createElement('p');
           const span1 = doc.createElement('span');
@@ -130,7 +166,7 @@
           p2.appendChild(span22);
           item.appendChild(p2);
 
-          cartItem.appendChild(span);
+          cartItem.appendChild(button);
           cartItem.appendChild(item);
 
           fragment.appendChild(cartItem);
