@@ -1,6 +1,9 @@
 /* eslint-disable no-console, no-continue */
 (function ninja(doc, win, $) {
   const app = (function controller() {
+    let games = [];
+    let currentGame = {};
+
     return {
       init() {
         this.loadGames();
@@ -17,35 +20,28 @@
       onLoadGames() {
         if (this.readyState === 4 && this.status === 200) {
           try {
-            app.mountPage(JSON.parse(this.responseText).types);
+            games = JSON.parse(this.responseText).types;
+            app.setCurrentGame(games[0]);
+            app.mountPage();
           } catch (e) {
             console.error(`Houve um erro ao carregar o jogos: \n`, e);
           }
         }
       },
 
-      mountPage(games) {
-        app.mountChooseGameButtons(games);
-        app.updatePage(games[0]);
-        app.addEvents(games);
+      mountPage() {
+        app.mountChooseGameButtons();
+        app.addEvents();
       },
 
-      addEvents(games) {
-        $('[data-js="complete-game"]').on(
-          'click',
-          () => this.completeGame(games[0]),
-          false
-        );
-
+      addEvents() {
+        $('[data-js="complete-game"]').on('click', this.completeGame, false);
         $('[data-js="clear-game"]').on('click', this.clearGame, false);
-        const addToCart = $('[data-js="add-to-cart"]');
-        addToCart.get().setAttribute('data-game-type', games[0].type);
-        addToCart.get().setAttribute('data-game-max', games[0]['max-number']);
-        addToCart.get().setAttribute('data-game-price', games[0].price);
-        addToCart.on('click', this.addToCart, false);
+        $('[data-js="add-to-cart"]').on('click', this.addToCart, false);
       },
 
-      completeGame({ 'max-number': maxNumber, range }) {
+      completeGame() {
+        const { 'max-number': maxNumber, range } = currentGame;
         app.clearGame();
 
         const numbers = [];
@@ -68,23 +64,22 @@
       },
 
       addToCart() {
-        const type = this.getAttribute('data-game-type');
-        const maxNumber = this.getAttribute('data-game-max');
-        const price = this.getAttribute('data-game-price');
-
-        const blank = $('[data-js="blank"]');
-        if (blank) {
-          blank.outerHTML = '';
-        }
+        const { type, 'max-number': maxNumber, price } = currentGame;
 
         const actives = $('.numbers > .number.active');
 
         if (actives.element.length < maxNumber) {
           win.alert(`Voce deve escolher ao menos ${maxNumber} números!`);
         } else {
+          const blank = $('[data-js="blank"]');
+          if (blank.element.length > 0) {
+            blank.get().outerHTML = '';
+          }
+
           const fragment = doc.createDocumentFragment();
 
           const cartItem = doc.createElement('div');
+          cartItem.setAttribute('data-item-price', price);
 
           const span = doc.createElement('span');
           const icon = doc.createElement('i');
@@ -122,9 +117,24 @@
           $('.items').get().appendChild(fragment);
           app.clearGame();
         }
+
+        app.sumTotalCart();
       },
 
-      mountChooseGameButtons(games) {
+      sumTotalCart() {
+        const sum = $('[data-item-price]').reduce(
+          (accumulator, current) =>
+            accumulator + +current.getAttribute('data-item-price'),
+          0
+        );
+        const finalValue = $('[data-js="final-value"]').get();
+        finalValue.innerText = `TOTAL: ${sum.toLocaleString('pt-br', {
+          style: 'currency',
+          currency: 'BRL',
+        })}`;
+      },
+
+      mountChooseGameButtons() {
         const $choose = $('.chooseGame');
 
         const fragment = doc.createDocumentFragment();
@@ -194,7 +204,7 @@
                   `
                 );
 
-                this.updatePage(btn);
+                this.setCurrentGame(btn);
               }
             },
             false
@@ -206,21 +216,23 @@
         $choose.get().appendChild(fragment);
       },
 
-      updatePage(game) {
+      updatePage() {
+        const {
+          type,
+          description,
+          'max-number': maxNumber,
+          range,
+        } = currentGame;
         const $type = $('[data-js="currentType"]').get();
         const $description = $('[data-js="currentDescription"]').get();
 
-        $type.innerText = game.type;
-        $description.innerText = game.description;
+        $type.innerText = type;
+        $description.innerText = description;
 
-        const addToCart = $('[data-js="add-to-cart"]').get();
-        addToCart.setAttribute('data-game-type', game.type);
-        addToCart.setAttribute('data-game-max', game['max-number']);
-        addToCart.setAttribute('data-game-price', game.price);
-        this.mountNumbers(game);
+        this.mountNumbers({ range, maxNumber });
       },
 
-      mountNumbers({ range, 'max-number': maxNumber }) {
+      mountNumbers({ range, maxNumber }) {
         const $numbers = $('.numbers').get();
 
         const fragment = doc.createDocumentFragment();
@@ -263,6 +275,11 @@
         const $style = $('[data-js="dynamic-style"]');
 
         $style.get().innerHTML = $style.get().innerHTML.replace(replace, style);
+      },
+
+      setCurrentGame(game) {
+        currentGame = game;
+        this.updatePage();
       },
     };
   })();
