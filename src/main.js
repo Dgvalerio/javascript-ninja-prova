@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-continue */
-(function ninja(doc, win, $) {
+(function ninja(doc, win, $, icons) {
   const app = (function controller() {
     let games = [];
     let currentGame = {};
@@ -119,6 +119,7 @@
         }
 
         app.sumTotalCart();
+        icons();
       },
 
       sumTotalCart() {
@@ -285,4 +286,4 @@
   })();
 
   app.init();
-})(document, window, window.DOM);
+})(document, window, window.DOM, window.featherIcons);

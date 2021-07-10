@@ -58,11 +58,12 @@
     <button>Save <i data-feather='arrow-right'></i></button>
   </section>
 </main>
-<script src='dom.js'></script>
-<script src='main.js'></script>
 <script src='https://unpkg.com/feather-icons'></script>
 <script>
-  feather.replace();
+  window.featherIcons = feather.replace;
+  window.featherIcons();
 </script>
+<script src='dom.js'></script>
+<script src='main.js'></script>
 </body>
 </html>
