@@ -25,6 +25,7 @@ header {
   align-items: center;
   padding: 1rem 4rem 0;
   border-bottom: 2px solid #EBEBEB;
+  gap: 1.4rem;
 }
 
 header > div {
@@ -120,6 +121,7 @@ section:first-child > .actions {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
+  gap: 0.4rem;
 }
 
 section:first-child > .actions > div {
@@ -214,7 +216,7 @@ section:last-child > div > .items > div > .item {
   flex-direction: column;
 
   border-left: 4px solid black;
-  border-radius: 0.4rem;
+  border-radius: 0.2rem;
   padding: 0.6rem 0.8rem;
   gap: 0.6rem;
 }
@@ -239,6 +241,17 @@ section:last-child > button {
   background-color: #F4F4F4;
   color: #27C383;
   font-style: italic;
+  transition: 0.4s;
+}
+
+section:last-child > button:hover {
+  color: #F4F4F4;
+  background-color: #27C383;
+}
+
+section:last-child > button:active {
+  color: #27C383;
+  background-color: #FFFFFF;
 }
 
 section:last-child h1 > span {
@@ -262,6 +275,20 @@ button {
 /* Responsividade */
 
 @media (max-width: 1024px) {
+  /* Header */
+  header {
+    flex-direction: column;
+  }
+
+  header > div {
+    flex-direction: column;
+  }
+
+  header > div:last-child {
+    flex-direction: column;
+    padding-bottom: 1.4rem;
+  }
+
   /* Main */
   main {
     flex-direction: column;
@@ -272,5 +299,18 @@ button {
   /* Seção esquerda */
   section:first-child > .chooseGame {
     flex-direction: column;
+  }
+
+  section:first-child > .actions {
+    flex-direction: column;
+  }
+
+  section:first-child > .actions > div {
+    flex-direction: column;
+  }
+
+  /* Seção direita */
+  section:last-child {
+    min-width: 0;
   }
 }
