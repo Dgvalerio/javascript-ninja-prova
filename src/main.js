@@ -27,22 +27,22 @@
       mountPage(games) {
         app.mountChooseGameButtons(games);
         app.updatePage(games[0]);
-        app.addEvents(games[0]);
+        app.addEvents(games);
       },
 
-      addEvents(game) {
+      addEvents(games) {
         $('[data-js="complete-game"]').on(
           'click',
-          () => this.completeGame(game),
+          () => this.completeGame(games[0]),
           false
         );
 
         $('[data-js="clear-game"]').on('click', this.clearGame, false);
-        $('[data-js="add-to-cart"]').on(
-          'click',
-          () => win.alert('add-to-cart'),
-          false
-        );
+        const addToCart = $('[data-js="add-to-cart"]');
+        addToCart.get().setAttribute('data-game-type', games[0].type);
+        addToCart.get().setAttribute('data-game-max', games[0]['max-number']);
+        addToCart.get().setAttribute('data-game-price', games[0].price);
+        addToCart.on('click', this.addToCart, false);
       },
 
       completeGame({ 'max-number': maxNumber, range }) {
@@ -65,6 +65,63 @@
         $('.numbers > .number.active').forEach((buttonActive) =>
           buttonActive.classList.remove('active')
         );
+      },
+
+      addToCart() {
+        const type = this.getAttribute('data-game-type');
+        const maxNumber = this.getAttribute('data-game-max');
+        const price = this.getAttribute('data-game-price');
+
+        const blank = $('[data-js="blank"]');
+        if (blank) {
+          blank.outerHTML = '';
+        }
+
+        const actives = $('.numbers > .number.active');
+
+        if (actives.element.length < maxNumber) {
+          win.alert(`Voce deve escolher ao menos ${maxNumber} números!`);
+        } else {
+          const fragment = doc.createDocumentFragment();
+
+          const cartItem = doc.createElement('div');
+
+          const span = doc.createElement('span');
+          const icon = doc.createElement('i');
+          icon.setAttribute('data-feather', 'trash-2');
+          span.appendChild(icon);
+
+          const item = doc.createElement('div');
+          item.classList.add('item');
+          item.setAttribute('data-game-type', type);
+          span.appendChild(icon);
+
+          const p1 = doc.createElement('p');
+          const span1 = doc.createElement('span');
+          span1.innerText = actives.map((a) => a.innerText).join(', ');
+          p1.appendChild(span1);
+          item.appendChild(p1);
+
+          const p2 = doc.createElement('p');
+          const span21 = doc.createElement('span');
+          span21.innerText = type;
+          const span22 = doc.createElement('span');
+          span22.innerText = Number(price).toLocaleString('pt-br', {
+            style: 'currency',
+            currency: 'BRL',
+          });
+          p2.appendChild(span21);
+          p2.appendChild(span22);
+          item.appendChild(p2);
+
+          cartItem.appendChild(span);
+          cartItem.appendChild(item);
+
+          fragment.appendChild(cartItem);
+
+          $('.items').get().appendChild(fragment);
+          app.clearGame();
+        }
       },
 
       mountChooseGameButtons(games) {
@@ -110,6 +167,14 @@
               border-color: ${btn.color}cc;
               background-color: ${btn.color}cc;
             }
+
+            section:last-child > div > .items > div > .item[data-game-type="${btn.type}"] {
+              border-color: ${btn.color};
+            }
+
+            section:last-child > div > .items > div > .item[data-game-type="${btn.type}"] > p:last-child > span:first-child {
+              color: ${btn.color};
+            }
           `);
 
           button.addEventListener(
@@ -148,7 +213,10 @@
         $type.innerText = game.type;
         $description.innerText = game.description;
 
-        this.addEvents(game);
+        const addToCart = $('[data-js="add-to-cart"]').get();
+        addToCart.setAttribute('data-game-type', game.type);
+        addToCart.setAttribute('data-game-max', game['max-number']);
+        addToCart.setAttribute('data-game-price', game.price);
         this.mountNumbers(game);
       },
 

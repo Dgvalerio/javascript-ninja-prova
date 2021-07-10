@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang='pt-br'>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="fav.png" />
-  <meta name="theme-color" content="#B5C401" />
-  <meta name="description" content="TGL - Java Script Ninja - Prova" />
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='icon' href='fav.png' />
+  <meta name='theme-color' content='#B5C401' />
+  <meta name='description' content='TGL - Java Script Ninja - Prova' />
   <title>TGL</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel='stylesheet' href='style.css' />
   <style data-js='dynamic-style'></style>
 </head>
 <body>
 <header>
   <div>
-    <a href="#">TGL</a>
-    <a href="#">Home</a>
+    <a href='#'>TGL</a>
+    <a href='#'>Home</a>
   </div>
   <div>
-    <a href="#">Account</a>
-    <a href="#">Log out <i data-feather="arrow-right"></i></a>
+    <a href='#'>Account</a>
+    <a href='#'>Log out <i data-feather='arrow-right'></i></a>
   </div>
 </header>
 <main>
@@ -27,59 +27,40 @@
 
     <p><b>Choose a game</b></p>
 
-    <div class="chooseGame"></div>
+    <div class='chooseGame'></div>
 
     <p><b>Fill your bet</b></p>
     <p data-js='currentDescription'> - </p>
 
-    <div class="numbers"></div>
+    <div class='numbers'></div>
 
-    <div class="actions">
+    <div class='actions'>
       <div>
-        <button type="button" data-js='complete-game'>Complete game</button>
-        <button type="button" data-js='clear-game'>Clear game</button>
+        <button type='button' data-js='complete-game'>Complete game</button>
+        <button type='button' data-js='clear-game'>Clear game</button>
       </div>
 
-      <button type="button" data-js='add-to-cart'>Add to cart <i data-feather="shopping-cart"></i></button>
+      <button type='button' data-js='add-to-cart'>Add to cart <i data-feather='shopping-cart'></i></button>
     </div>
   </section>
   <section>
     <div>
       <h1>CART</h1>
 
-      <div>
-        <span><i data-feather="trash-2"></i></span>
-        <div class="item lotofacil">
-          <p><span>01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25</span></p>
-          <p><span>lotofácil</span> <span>R$ 2,50</span></p>
+      <div class='items' data-js='blank'>
+        <div>
+          <p>Seu carrinho está vazio.</p>
         </div>
       </div>
 
-      <div>
-        <span><i data-feather="trash-2"></i></span>
-        <div class="item megasena">
-          <p>1,2,3,4,4,5,6,9,7,8</p>
-          <p><span>lotofácil</span> <span>R$ 2,50</span></p>
-        </div>
-      </div>
-
-      <div>
-        <span><i data-feather="trash-2"></i></span>
-
-        <div class="item lotomania">
-          <p>1,2,3,4,4,5,6,9,7,8</p>
-          <p><span>lotofácil</span> <span>R$ 2,50</span></p>
-        </div>
-      </div>
-
-      <h1>CART <span>TOTAL: R$ 7,00</span></h1>
+      <h1>CART <span data-js='final-value'>TOTAL: R$ 0,00</span></h1>
     </div>
-    <button>Save <i data-feather="arrow-right"></i></button>
+    <button>Save <i data-feather='arrow-right'></i></button>
   </section>
 </main>
-<script src="dom.js"></script>
-<script src="main.js"></script>
-<script src="https://unpkg.com/feather-icons"></script>
+<script src='dom.js'></script>
+<script src='main.js'></script>
+<script src='https://unpkg.com/feather-icons'></script>
 <script>
   feather.replace();
 </script>

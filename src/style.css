@@ -122,7 +122,6 @@ section:first-child > .actions {
   align-items: stretch;
 }
 
-
 section:first-child > .actions > div {
   display: flex;
   justify-content: space-between;
@@ -180,14 +179,21 @@ section:last-child > div > h1:last-child {
   margin-top: 1rem;
 }
 
-section:last-child > div > div {
+section:last-child > div > .items {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+}
+
+section:last-child > div > .items > div {
   display: flex;
   align-items: center;
 
   gap: 1rem;
 }
 
-section:last-child > div > div > .item {
+section:last-child > div > .items > div > .item {
   display: flex;
   flex-direction: column;
 
@@ -197,37 +203,13 @@ section:last-child > div > div > .item {
   gap: 0.6rem;
 }
 
-section:last-child > div > div > .item > p > span:first-child {
+section:last-child > div > .items > div > .item > p > span:first-child {
   font-weight: bolder;
 }
 
-section:last-child > div > div > .item > p:last-child > span:last-child {
+section:last-child > div > .items > div > .item > p:last-child > span:last-child {
   font-style: normal;
   margin-left: 0.4rem;
-}
-
-section:last-child > div > div > .item.lotofacil {
-  border-color: #7F3992;
-}
-
-section:last-child > div > div > .item.lotofacil > p:last-child > span:first-child {
-  color: #7F3992;
-}
-
-section:last-child > div > div > .item.megasena {
-  border-color: #01AC66;
-}
-
-section:last-child > div > div > .item.megasena > p:last-child > span:first-child {
-  color: #01AC66;
-}
-
-section:last-child > div > div > .item.lotomania {
-  border-color: #F79C31;
-}
-
-section:last-child > div > div > .item.lotomania > p:last-child > span:first-child {
-  color: #F79C31;
 }
 
 section:last-child > button {
